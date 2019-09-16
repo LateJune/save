@@ -1,13 +1,15 @@
+# Save command -> saves line by line into a text file
+
+
 #!/bin/usr/env python3
 
 import sys
 import os
 
-path = "/home/crushedblind/final-project"
+path = "/home/crushedblind/test-dir"
 
 def main():
     walk_dir()
-
 
     return None
 
@@ -18,9 +20,11 @@ def walk_dir():
         for file in files:
             #print(type(file))
             #print(file)
-            print(os.path.join(subdir,file))
-            #contents = open(file,'r')
-            #print(contents)
+            file_path = os.path.join(subdir,file)
+            open_file = open(file_path,'r')
+            contents = open_file.readlines()
+            print(contents)
+
     return
 
 
