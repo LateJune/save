@@ -21,7 +21,6 @@ def main():
     while True:
         scan_directories()
 
-
     return None
 
 
@@ -31,9 +30,7 @@ def scan_directories():
     while True:
         print(walk_dir())
         time.sleep(2)
-
         
-
     return 
 
 def count_dir_files():
@@ -47,7 +44,6 @@ def count_dir_files():
 
     return num_of_folders, num_of_files
     
-
 def walk_dir():
     subdir_list = []
     file_list = []
@@ -57,12 +53,15 @@ def walk_dir():
             file_path = os.path.join(subdir,file)
             #print(file_path)
             open_file = open(file_path,'r')
-            contents = open_file.readlines()
             file_list.append(file)
+            
+            # read the contents of each file
+            # Do something later
+            file_contents = open_file.readlines()
         subdir_list.append(subdir)
 
 
-    return subdir_list, file_list
+    return subdir_list, file_list, 
 
 
 
