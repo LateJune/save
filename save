@@ -1,0 +1,25 @@
+#!/bin/bash
+
+if [[ -z $1 ]]; then
+    history -a
+    LASTCMD=$(tail -1 ~/.bash_history)
+    echo \`$LASTCMD\` >> savefile.md
+    echo "${LASTCMD} added to savefile"
+
+elif [[ $1 -eq "-i"]]; then
+    $(./save bash -i)
+
+else
+    echo \`$@\` >> savefile.md
+    echo "\`\`\`" >> savefile.md
+    $@ |& tee -a savefile.md
+    echo "\`\`\`" >> savefile.md
+
+fi
+
+
+
+
+
+
+
