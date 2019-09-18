@@ -27,15 +27,15 @@ elif [[ $1 == "-c" ]]; then
         echo $2 >> $NOTEFILE
     fi
 
+# Execute a single command and save it's output
 elif [[ $1 == "-e" ]]; then
     echo "Add comment? 'Enter' to continue"
     read comment
     echo "${comment}" >> $NOTEFILE
     echo ${@:2:99} >> $NOTEFILE 
-    # TODO: find a way to encapsulate the command in quotes
     "${@:2:99}" |& tee -a $NOTEFILE
 
-# Enter interactive bash mode to save everything
+# Enter interactive bash mode to save everything until exit
 elif [[ $1 == "bash" && $2 == "-i" ]]; then
     echo "Entering interactive mode enter file name: "
     read filename
