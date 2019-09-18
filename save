@@ -1,12 +1,13 @@
 #!/bin/bash
 
-NOTEFILE='notes.txt'
+NOTEFILE='notes.md'
 
 # If run with no commands saves the last command entered
 if [[ -z $1 ]]; then
     history -a
     LASTCMD=$(tail -1 ~/.bash_history)
-    echo $LASTCMD >> $NOTEFILE
+    echo "#### `date`" >> $NOTEFILE
+    echo "\`$LASTCMD\`" >> $NOTEFILE
     echo "${LASTCMD} added to savefile"
 
 elif [[ $1 == "-i" ]]; then
@@ -22,20 +23,26 @@ elif [[ $1 == "-c" ]]; then
     if [[ -z $2 ]]; then
         echo "Enter note to add to ${NOTEFILE}"
         read note
-        echo $note >> $NOTEFILE
+        echo "#### `date`" >> $NOTEFILE
+        echo "- ${note}" >> $NOTEFILE
     else
-        echo $2 >> $NOTEFILE
+        echo "#### `date`" >> $NOTEFILE
+        echo "\`${2}\`" >> $NOTEFILE
     fi
 
-# Execute a single command and save it's output
 elif [[ $1 == "-e" ]]; then
     echo "Add comment? 'Enter' to continue"
-    read comment
-    echo "${comment}" >> $NOTEFILE
-    echo ${@:2:99} >> $NOTEFILE 
-    "${@:2:99}" |& tee -a $NOTEFILE
+    read note
+    echo "#### `date`" >> $NOTEFILE
+    echo "- ${note}" >> $NOTEFILE
+    
+    echo "\`${@:2:99}\`" >> $NOTEFILE 
 
-# Enter interactive bash mode to save everything until exit
+    echo "\`\`\`" >> $NOTEFILE
+    "${@:2:99}" |& tee -a $NOTEFILE
+    echo "\`\`\`" >> $NOTEFILE
+
+# Enter interactive bash mode to save everything
 elif [[ $1 == "bash" && $2 == "-i" ]]; then
     echo "Entering interactive mode enter file name: "
     read filename
