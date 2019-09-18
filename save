@@ -31,11 +31,11 @@ elif [[ $1 == "-e" ]]; then
     echo "Add comment?"
     read comment
     echo "${comment}" >> $NOTEFILE
-    # ${@:2:99} gets all command line input after -e up to the 99th option
     echo ${@:2:99} >> $NOTEFILE
     # TODO: find a way to encapsulate the command in quotes
     "${@:2:99}" |& tee -a $NOTEFILE
-    
+
+
 # Enter interactive bash mode to save everything
 elif [[ $1 == "bash" && $2 == "-i" ]]; then
     echo "Entering interactive mode enter file name: "
