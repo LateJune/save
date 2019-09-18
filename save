@@ -6,7 +6,7 @@ NOTEFILE='notes.txt'
 if [[ -z $1 ]]; then
     history -a
     LASTCMD=$(tail -1 ~/.bash_history)
-    echo \`$LASTCMD\` >> $NOTEFILE
+    echo $LASTCMD >> $NOTEFILE
     echo "${LASTCMD} added to savefile"
 
 elif [[ $1 == "-i" ]]; then
@@ -39,6 +39,6 @@ elif [[ $1 == "-e" ]]; then
 elif [[ $1 == "bash" && $2 == "-i" ]]; then
     echo "Entering interactive mode enter file name: "
     read filename
-    echo \`$@\` >> $filename
+    echo $@ >> $filename
     $@ |& tee -a $filename
 fi
