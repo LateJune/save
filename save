@@ -1,9 +1,12 @@
 #!/bin/bash
 
+NOTEFILE='notes.txt'
+
+# If run with no commands saves the last command entered
 if [[ -z $1 ]]; then
     history -a
     LASTCMD=$(tail -1 ~/.bash_history)
-    echo \`$LASTCMD\` >> savefile.md
+    echo \`$LASTCMD\` >> $NOTEFILE
     echo "${LASTCMD} added to savefile"
 
 elif [[ $1 == "-i" ]]; then
@@ -14,10 +17,26 @@ elif [[ $1 == "-i" ]]; then
     ./save bash -i 
     exit 1
 
+# add a text note to note file (comment)
 elif [[ $1 == "-c" ]]; then
-    echo "Not implemented"
-    # add comment to ?where?
+    if [[ -z $2 ]]; then
+        echo "Enter note to add to ${NOTEFILE}"
+        read note
+        echo $note >> $NOTEFILE
+    else
+        echo $2 >> $NOTEFILE
+    fi
 
+elif [[ $1 == "-e" ]]; then
+    echo "Add comment?"
+    read comment
+    echo "${comment}" >> $NOTEFILE
+    echo $2 >> $NOTEFILE
+    # TODO: find a way to encapsulate the command in quotes
+    "${2}" |& tee -a $NOTEFILE
+
+
+# Enter interactive bash mode to save everything
 elif [[ $1 == "bash" && $2 == "-i" ]]; then
     echo "Entering interactive mode enter file name: "
     read filename
