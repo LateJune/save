@@ -6,20 +6,21 @@ if [[ -z $1 ]]; then
     echo \`$LASTCMD\` >> savefile.md
     echo "${LASTCMD} added to savefile"
 
-elif [[ $1 -eq "-i"]]; then
-    $(./save bash -i)
+elif [[ $1 == "-i" ]]; then
+    # This line of code re runs the command in interactive bash mode
+    # Which allows us to save all input and output to file
+    # This can be confusing because you could run this command to do the same thing
+    # But the -i flag is cleaner.
+    ./save bash -i 
+    exit 1
 
-else
-    echo \`$@\` >> savefile.md
-    echo "\`\`\`" >> savefile.md
-    $@ |& tee -a savefile.md
-    echo "\`\`\`" >> savefile.md
+elif [[ $1 == "-c" ]]; then
+    echo "Not implemented"
+    # add comment to ?where?
 
+elif [[ $1 == "bash" && $2 == "-i" ]]; then
+    echo "Entering interactive mode enter file name: "
+    read filename
+    echo \`$@\` >> $filename
+    $@ |& tee -a $filename
 fi
-
-
-
-
-
-
-
