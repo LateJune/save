@@ -28,13 +28,12 @@ elif [[ $1 == "-c" ]]; then
     fi
 
 elif [[ $1 == "-e" ]]; then
-    echo "Add comment?"
+    echo "Add comment? 'Enter' to continue"
     read comment
     echo "${comment}" >> $NOTEFILE
-    echo ${@:2:99} >> $NOTEFILE
+    echo ${@:2:99} >> $NOTEFILE 
     # TODO: find a way to encapsulate the command in quotes
     "${@:2:99}" |& tee -a $NOTEFILE
-
 
 # Enter interactive bash mode to save everything
 elif [[ $1 == "bash" && $2 == "-i" ]]; then
