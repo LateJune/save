@@ -48,4 +48,10 @@ elif [[ $1 == "bash" && $2 == "-i" ]]; then
     read filename
     echo $@ >> $filename
     $@ |& tee -a $filename
+
+elif [[ $1 == "-p" ]];then
+    echo "Parsing..."
+    ./parse.py
+
+
 fi
