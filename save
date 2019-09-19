@@ -7,7 +7,7 @@ if [[ -z $1 ]]; then
     history -a
     LASTCMD=$(tail -1 ~/.bash_history)
     echo "#### `date`" >> $NOTEFILE
-    echo "\`$LASTCMD\`" >> $NOTEFILE
+    echo "\` $LASTCMD\`" >> $NOTEFILE
     echo "${LASTCMD} added to savefile"
 
 elif [[ $1 == "-i" ]]; then
@@ -27,7 +27,7 @@ elif [[ $1 == "-c" ]]; then
         echo "- ${note}" >> $NOTEFILE
     else
         echo "#### `date`" >> $NOTEFILE
-        echo "\`${2}\`" >> $NOTEFILE
+        echo "\` ${2}\`" >> $NOTEFILE
     fi
 
 elif [[ $1 == "-e" ]]; then
@@ -36,7 +36,7 @@ elif [[ $1 == "-e" ]]; then
     echo "#### `date`" >> $NOTEFILE
     echo "- ${note}" >> $NOTEFILE
     
-    echo "\`${@:2:99}\`" >> $NOTEFILE 
+    echo "\` ${@:2:99}\`" >> $NOTEFILE 
 
     echo "\`\`\`" >> $NOTEFILE
     "${@:2:99}" |& tee -a $NOTEFILE
