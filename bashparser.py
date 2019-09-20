@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import os
-import time
+import re
 def main():
 
     open_file = open("masterfile", 'r')
@@ -14,12 +14,15 @@ def main():
 
     return
 
+
 def change_color(note_file_str):
     new_colored_string = ''
+
+    colour = re.findall("\[01;..m", note_file_str)
     
     index = 0
     leng_of_str = len(note_file_str)
-    while '[01;32m' in note_file_str:
+    while colour[0] in note_file_str:
         new_colored_string = note_file_str.replace('[01;32m', '[01;35m')
         index += 1
         if index == leng_of_str:
@@ -47,7 +50,7 @@ def parse_note_file(note_file):
     for line in note_file:
         if 'bash -i' in line:
             continue
-        elif '$' in line or '#' in line:
+        elif '$' in line:
             command_list.append([line])
         else:
             command_list[-1].append(line)
