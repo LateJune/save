@@ -47,7 +47,7 @@ def parse_note_file(note_file):
     for line in note_file:
         if 'bash -i' in line:
             continue
-        elif '$' in line:
+        elif '$' in line or '#' in line:
             command_list.append([line])
         else:
             command_list[-1].append(line)
