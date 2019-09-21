@@ -1,56 +1,28 @@
 #!/bin/bash
 
-NOTEFILE='notes.md'
+NOTEFILE='savefile.txt'
+echo `date` >> $NOTEFILE
 
 # If run with no commands saves the last command entered
 if [[ -z $1 ]]; then
     history -a
     LASTCMD=$(tail -1 ~/.bash_history)
-    echo "#### `date`" >> $NOTEFILE
-    echo "\` $LASTCMD\`" >> $NOTEFILE
-    echo "${LASTCMD} added to savefile"
-
-elif [[ $1 == "-i" ]]; then
-    # This line of code re runs the command in interactive bash mode
-    # Which allows us to save all input and output to file
-    # This can be confusing because you could run this command to do the same thing
-    # But the -i flag is cleaner.
-    ./save bash -i 
-    exit 1
-
-# add a text note to note file (comment)
-elif [[ $1 == "-c" ]]; then
-    if [[ -z $2 ]]; then
-        echo "Enter note to add to ${NOTEFILE}"
-        read note
-        echo "#### `date`" >> $NOTEFILE
-        echo "- ${note}" >> $NOTEFILE
-    else
-        echo "#### `date`" >> $NOTEFILE
-        echo "\` ${2}\`" >> $NOTEFILE
-    fi
+    echo "$LASTCMD" >> $NOTEFILE
 
 elif [[ $1 == "-e" ]]; then
-    echo "Add comment? 'Enter' to continue"
-    read note
-    echo "#### `date`" >> $NOTEFILE
-    echo "- ${note}" >> $NOTEFILE
-    
-    echo "\` ${@:2:99}\`" >> $NOTEFILE 
-
-    echo "\`\`\`" >> $NOTEFILE
+    echo "${@:2:99}" >> $NOTEFILE 
     "${@:2:99}" |& tee -a $NOTEFILE
-    echo "\`\`\`" >> $NOTEFILE
 
 # Enter interactive bash mode to save everything
-elif [[ $1 == "bash" && $2 == "-i" ]]; then
-    echo "Entering interactive mode enter file name: "
-    read filename
-    echo $@ >> $filename
-    $@ |& tee -a $filename
+elif [[ $1 == "-i" ]]; then
+    $command  $2
+    $file = $3
+    $command |& tee -a $file
 
 elif [[ $1 == "-p" ]];then
-    ./bashparser.py
+    echo "Parsing..."
+    ./parse.py
 
-
+else
+    echo $@ >> $NOTEFILE
 fi
