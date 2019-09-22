@@ -1,29 +1,28 @@
 #!/bin/bash
 
-NOTEFILE='savefile.txt'
-echo `date` >> $NOTEFILE
+SAVEFILE='savefile.txt'
+echo `date` >> $SAVEFILE
 
 # If run with no commands saves the last command entered
 if [[ -z $1 ]]; then
     history -a
     LASTCMD=$(tail -1 ~/.bash_history)
-    echo "$LASTCMD" >> $NOTEFILE
+    echo "$LASTCMD" >> $SAVEFILE
 
-elif [[ $1 == "-e" ]]; then
-    echo "${@:2:99}" >> $NOTEFILE 
-    "${@:2:99}" |& tee -a $NOTEFILE
-
-# Enter interactive bash mode to save everything
+# Enter interactive mode
 elif [[ $1 == "-i" ]]; then
-    $2 |& tee -a $3
+    file=$SAVEFILE
+    if [[ -z $3 ]]; then
+        echo $2 >> $file
+    else
+        file=$3
+    fi
+    $2 |& tee -a $file
 
 elif [[ $1 == "-p" ]];then
     echo "Parsing..."
-    ./bashparser.py $2 $3
+    ./parse.py
 
-elif [[ $1 == "me" ]]; then
-	echo "You can do anything!! :)"
-	echo "YOU CAN DO ANYTHING!!"
-else
-    echo $@ >> $NOTEFILE
+else # save anything
+    echo $@ >> $SAVEFILE
 fi
