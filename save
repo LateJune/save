@@ -15,14 +15,15 @@ elif [[ $1 == "-e" ]]; then
 
 # Enter interactive bash mode to save everything
 elif [[ $1 == "-i" ]]; then
-    $command  $2
-    $file = $3
-    $command |& tee -a $file
+    $2 |& tee -a $3
 
 elif [[ $1 == "-p" ]];then
     echo "Parsing..."
-    ./parse.py
+    ./bashparser.py $2 $3
 
+elif [[ $1 == "me" ]]; then
+	echo "You can do anything!! :)"
+	echo "YOU CAN DO ANYTHING!!"
 else
     echo $@ >> $NOTEFILE
 fi
