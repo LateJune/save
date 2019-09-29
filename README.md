@@ -6,6 +6,10 @@ Add this to your `~/.bashrc` to use:
 
 `PROMPT_COMMAND="history -a;$PROMPT_COMMAND"`
 
+Run the command
+
+`source .bashrc`
+
 ### How to use save
 `save` to store the most recent command in the current terminal`
 - TODO: make this work with an aborted command i.e. Hydra
